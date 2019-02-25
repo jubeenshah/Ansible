@@ -203,9 +203,9 @@ Three levels
 
 | Scope | Definition |
 |-------|-----------|
-| Global | <ul><li> Set by configuration, environment variables, command line </li></ul> |
-| Play | <ul><li> Set by playbook, play</li> <li>  Defined by `vars`, `include`, `include_vars`</li></ul>|
-| Host | <ul><li> Set at host level </li><li> Example: `ansible_user` defines user to connect with on managed host </li></ul>|
+| Global | <li> Set by configuration, environment variables, command line </li> |
+| Play | <li> Set by playbook, play</li> <li>  Defined by `vars`, `include`, `include_vars`</li>|
+| Host | <li> Set at host level </li><li> Example: `ansible_user` defines user to connect with on managed host </li>|
 
 * Scopes let you determine best variable placement
 * To define variable only for playbook, use vars block
