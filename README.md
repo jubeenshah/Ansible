@@ -15,6 +15,15 @@
 * [Ansible Return Values](#ansible-return-values)
 
 #### Variable Overview
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
+
 * `Variable:` String or number that gets assigned value
 * Lets you reuse information across:
 	* Playbooks
@@ -64,6 +73,14 @@ group: wheel
 ```
 
 #### Variable Precedence
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 >	 If Ansible finds variables with same name, uses chain of precedence
 >	 Ansible 2: Variables evaluated in 16 categories of precedence order
 
@@ -199,6 +216,14 @@ ansible-playbook users.yml -e "user=joe"
 ```
 
 #### Variable Scope
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 Three levels
 
 | Scope | Definition |
@@ -231,6 +256,14 @@ user: joe
 ```
 
 #### Variable Mangement
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 * Declare playbook variables in various locations:
 	* In inventory file as host or group variables
 	* In vars statement as playbook variables
@@ -296,6 +329,14 @@ package=httpd
 ```
 
 #### Registered Variables
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 
 * To capture command’s output, use `register` statement
 
@@ -338,6 +379,14 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 ```
 
 #### Inclusion
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 * Tasks included with `include` executed same as if defined in playbook
 * Variables included with `include_vars` parsed same as if declared in playbook
 * Using multiple external files for tasks and variables:
@@ -380,7 +429,14 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 	* Bracket notation: `packages['db_package']`, `packages['web_package']`
 
 #### Loops
-
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 * Loops require use of arrays
 	* You define array and task that iterates over array
 	* Loop iterates over values defined in array
@@ -415,7 +471,14 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 ```
 
 #### Ansible Return Values
-
+|[Variable Overview](#variable-overview)|
+[Variable Precedence](#variable-precedence)|
+[Variable Scope](#variable-scope)|
+[Variable Management](#variable-mangement)|
+[Registered Variables](#registered-variables)|
+[Inclusion](#inclusion)|
+[Loops](#loops)|
+[Ansible Return Values](#ansible-return-values)|
 | Value | Description |
 |------|------------|
 | `changed` | <li>Boolean indicating if task had to make changes</li> |
