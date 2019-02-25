@@ -1,7 +1,7 @@
 # Ansible
 
 ## Table of Content
-1. [Loops, Variables, and Return Values](#loops,-variables,-and-return-values)
+1. [Loops, Variables, and Return Values](#1-loops-variables-and-return-values)
 2. 
 
 ### 1. Loops, Variables, and Return Values
@@ -62,3 +62,138 @@ users:
         name: joe
         group: wheel
     ```
+
+#### Variables Precedence
+>	 If Ansible finds variables with same name, uses chain of precedence
+>	 Ansible 2: Variables evaluated in 16 categories of precedence order
+
+
+
+1. Role Default Variables:
+		* Set in roles `vars` directory
+		
+		```yaml
+		[configuration]
+		users:
+ 		- joe
+		 - jane
+			- bob
+		 ```
+2. Inventory Variables:
+	
+		```yaml
+		[host_group]
+		demo.exmample.com ansible_user: joe
+		``` 
+3. Inventory `group_vars` variables: 
+	    
+	    ```yaml
+	    [hostgroup:children]
+		host_group1
+		host_group2
+
+		[host_group:vars]
+		user: joe
+	    ```
+4. Inventory `host_vars` variables:
+	
+		```yaml
+		[hostgroup:vars]
+		user: joe
+		```
+5. `group_vars` variables defined in `group_vars` directory: 	
+	
+		```yaml
+		--
+		user: joe
+		```
+		
+6. `host_vars` variables defined in `host_vars` directory:
+	
+		```yaml
+		--
+		user: joe
+		```
+
+7. Host facts, i.e facts discoverable by Ansible
+8. Registered variables, registered with `register` keyword
+
+	```yaml
+	---
+	- hosts: all
+  	tasks:
+    - name: Checking if Sources are Available
+      shell: echo "This is a test"
+      register: output
+	```
+9. Variables defined via `set_fact`:
+
+	```yaml
+	- set_fact:
+	  user: joe
+	```
+	
+10. Variables defined with `-a` or `--args`:
+
+	```yaml
+	ansible-playbook main.yml -a "user=joe"
+	```
+	
+11. `vars_prompt` variables:
+	
+	```yaml
+	
+	vars:
+	from: "user"
+  		vars_prompt:
+    		- name: "user"
+      		  prompt: "User to create"
+	```
+	
+12. Variables included using `vars_files`:
+
+	```yaml
+	vars_files:
+      - /vars/environment.yml
+	```
+
+13. `role` and `include`variables:
+
+	```yaml
+	---
+	- hosts: all
+  	  roles:
+        - { role: user, name: 'joe' }
+  	  tasks:
+        - name: Includes the environment file and sets the variables
+          include: tasks/environment.yml
+          vars:
+            package: httpd
+            state: started
+	```
+	
+14. Block variables
+	* For tasks defined in `block` statement
+
+	```yaml
+	tasks:
+  	- block:
+		- yum: name={{ item }} state=installed
+      	  with_items:
+            - httpd
+            - memcached
+	```
+
+15. Task variables
+	* Only for task itself:
+	
+	```yaml
+	- user: name=joe
+	```
+
+16. `extra` variables
+	* Precedence over all other variables
+
+	```yaml
+	ansible-playbook users.yml -e "user=joe"
+	```
