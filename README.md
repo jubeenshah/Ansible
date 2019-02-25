@@ -641,12 +641,120 @@ Order of Execution
 |[Python Cryptography](#python-cryptography)
 |
 
+* File Tasks
+	* To enable Ansible Vault, use ansible-vault
+	* Available file tasks:
+		* Create
+		* Encrypt
+		* View
+		* Edit
+		* Decrypt
+
 #### Encrypted Files
 |[Ansible Vault Overview](#ansible-vault-overview)
 |[Encrypted Files](#encrypted-files)
 |[Playbooks](#playbooks)
 |[Python Cryptography](#python-cryptography)
 |
+
+_Creating a file_
+* To create encrypted file, use `ansible-vault create FILENAME`
+* Enter and confirm new vault password:
+
+```shell
+[student@demo ~]$ ansible-vault create secret.yml
+New Vault password: redhat
+Confirm New Vault password: redhat
+```
+
+* Default: File opens using vim editor
+	* To use different editor, set and import `EDITOR`
+	* Example: To use nano editor, set nano: `export EDITOR=nano`
+* Default encryption cipher: Advanced Encryption Standard (AES)
+	* Shared secret-based
+
+_Password File_
+* To enter password, can reference vault password file
+	* Replaces standard password input:
+
+```shell
+[student@demo ~]$ ansible-vault create --vault-password-file=vault-pass secret.yml
+```
+
+_Encrypting a File_
+* To encrypt existing file, use `ansible-vault encrypt FILENAME`
+	* To encrypt more than one file, enter file names as arguments:
+
+```shell
+[student@demo ~]$ ansible-vault encrypt secret1.yml secret2.yml
+New Vault password: redhat
+Confirm New Vault password: redhat
+Encryption successful
+```
+
+* To save file with new name, use `--output=OUTPUT_FILE`
+	* Available for encrypting single file only
+
+_Viewing an Encrypted File_
+
+To view file, use `ansible-vault view FILENAME`:
+
+```shell
+[student@demo ~]$ ansible-vault view secret1.yml
+Vault password: secret
+less 458 (POSIX regular expressions)
+Copyright (C) 1984-2012 Mark Nudelman
+
+less comes with NO WARRANTY, to the extent permitted by law.
+For information about the terms of redistribution,
+see the file named README in the less distribution.
+Homepage: http://www.greenwoodsoftware.com/less
+my_secret: "yJJvPqhsiusmmPPZdnjndkdnYNDjdj782meUZcw"
+```
+
+* File not opened for editing
+
+_Editing an Encrypted File_
+
+* To edit file, use `ansible-vault edit FILENAME`:
+
+```shell
+[student@demo ~]$ ansible-vault edit secret.yml
+Vault password: redhat
+```
+
+* Decrypts file to temporary file
+	* Edit temporary file and save changes
+	* Content copied to encrypted file
+	* Temporary file removed
+
+_Changing a File Password_
+
+* To change vault password, use `ansible-vault rekey FILENAME`
+* Enter original and new password:
+
+`shell
+[student@demo ~]$ ansible-vault rekey secret.yml
+Vault password: redhat
+New Vault password: RedHat
+Confirm New Vault password: RedHat
+Rekey successful
+```
+
+* Can rekey multiple files sharing same password
+* Enter file names as arguments
+* To use password file, supply file name to rekey
+* To do so, use `--new-vault-password-file`
+
+_Decrypting a File_
+
+* To decrypt file, use `ansible-vault decrypt FILENAME`:
+
+```shell
+[student@demo ~]$ ansible-vault decrypt secret1.yml --output=secret1-decrypted.yml
+Vault password: redhat
+Decryption successful
+```
 
 #### Playbooks
 |[Ansible Vault Overview](#ansible-vault-overview)
@@ -655,9 +763,33 @@ Order of Execution
 |[Python Cryptography](#python-cryptography)
 |
 
-#### Python Cryptography
-|[Ansible Vault Overview](#ansible-vault-overview)
-|[Encrypted Files](#encrypted-files)
-|[Playbooks](#playbooks)
-|[Python Cryptography](#python-cryptography)
-|
+* Playbook can use variables encrypted by Ansible Vault
+* Variable types:
+	* Defined in group_vars or host_vars
+	* Loaded by include_vars or vars_files
+	* Passed on `ansible-playbook` with `-e @file.yml` or `-e @file.json`
+	* Defined as role variables and defaults
+* Playbook decrypted in memory while running
+
+_Variable Example_
+* To run such playbook, specify: 
+* `--ask-vault-pass`
+* `--vault-password-file:`
+
+```shell
+[student@demo ~]$ ansible-playbook --ask-vault-pass site.yml
+```
+
+_Password File_
+
+* Alternative: Provide file location to decrypt vault
+	* File stores password in plain text or using script
+	* Password is string stored as single line in file
+* To provide file location, use `--vault-password-file=/path/to/vault-password-file`:
+
+```shell
+[student@demo ~]$ ansible-playbook --vault-password-file=vault-pass site.yml
+```
+
+* Other option: Set vault password file as environmental variable
+	* To do so, use `ANSIBLE_VAULT_PASSWORD_FILE=~/vault-pass`
