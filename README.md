@@ -500,8 +500,12 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 
 
 #### Roles Overview
+|[Roles Overview](#roles-overview)
+|[Roles in Playbooks](#roles-in-playbooks)
+|[Role Creation](#role-creation)
+|[Ansible Galaxy](#ansible-galaxy)|
 
-**Role Uses:**
+_Role Uses:_
 
 * Enable Ansible to load components from external files:
 	* Tasks
@@ -544,6 +548,10 @@ user.example/
 |`vars`|<li>	`main.yml` defines role variable values</li><li>High Priority</li>|
 
 #### Roles in Playbooks
+|[Roles Overview](#roles-overview)
+|[Roles in Playbooks](#roles-in-playbooks)
+|[Role Creation](#role-creation)
+|[Ansible Galaxy](#ansible-galaxy)|
 * Simple to use roles in playbooks
 * Example:
 
@@ -576,5 +584,13 @@ Order of Execution
 ```
 
 #### Role Creation
+|[Roles Overview](#roles-overview)
+|[Roles in Playbooks](#roles-in-playbooks)
+|[Role Creation](#role-creation)
+|[Ansible Galaxy](#ansible-galaxy)|
 
 #### Ansible Galaxy
+|[Roles Overview](#roles-overview)
+|[Roles in Playbooks](#roles-in-playbooks)
+|[Role Creation](#role-creation)
+|[Ansible Galaxy](#ansible-galaxy)|
