@@ -589,8 +589,38 @@ Order of Execution
 |[Role Creation](#role-creation)
 |[Ansible Galaxy](#ansible-galaxy)|
 
+* Ansible looks for roles in:
+	* `roles` subdirectory
+	* Directories referenced by `roles_path`
+		* Located in Ansible configuration file
+		* Contains list of directories to search
+	* Each role has directory with specially named subdirectories
+* Use in Playbook
+	* To access role, reference it in roles: playbook section
+	* Example: Playbook referencing motd role
+		* No variables specified
+		* Role applied with default variable values:
+
+```shell
+[user@host ~]$ cat use-motd-role.yml
+---
+- name: use motd role playbook
+  hosts: remote.example.com
+  user: devops
+  become: true
+
+  roles:
+    - motd
+```
+
 #### Ansible Galaxy
 |[Roles Overview](#roles-overview)
 |[Roles in Playbooks](#roles-in-playbooks)
 |[Role Creation](#role-creation)
 |[Ansible Galaxy](#ansible-galaxy)|
+
+* [https://galaxy.ansible.com](https://galaxy.ansible.com)
+* Library of Ansible roles written by Ansible administrators and users
+* Archive contains thousands of Ansible roles
+* Database helps users identify helpful roles for accomplishing task
+* Includes links to documentation and videos for users and developers
