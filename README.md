@@ -5,8 +5,8 @@
 2. 
 
 ### 1. Loops, Variables, and Return Values
-* Variables Overview
-* Variable Precedence
+* [Variables Overview](#variables-overview)
+* [Variable Precedence](#variable-precedence)
 * Variable Scope
 * Variables Management
 * Registered Variables
