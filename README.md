@@ -430,14 +430,86 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 
 ### 2. Roles
 * [Roles Overview](#roles-overview)
-* [Roles in Playbooks](#roles-in-playbook)
-* [Role Creation](#roles-creation)
+* [Roles in Playbooks](#roles-in-playbooks)
+* [Role Creation](#role-creation)
 * [Ansible Galaxy](#ansible-galaxy)
 
 
 #### Roles Overview
 
+**Role Uses:**
+
+* Enable Ansible to load components from external files:
+	* Tasks
+	* Handlers
+	* Variables
+* Associate and reference:
+	* Static files
+	* Templates
+
+```shell
+[user@host roles]$ tree user.example
+user.example/
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+└── main.yml
+```
+
+|Subdirectory|Function|
+|-------------|---------|
+|`defaults`|<li>`main.yml` contains default values for role variables</li><li>Values can be overwritten when role is used</li><li>Lowest priority</li>|
+|`files`|<li>Contains static files referenced by role tasks</li>|
+|`handlers`|<li>`main.yml` contains role handler definitions</li>|
+|`meta`|<li>`main.yml` defines role information</li><li>Includes author, license, platforms, optional dependencies</li>|
+|`tasks`|<li>`main.yml` contains role task definitions</li>|
+|`templates`|<li>Contains `Jinja2` templates referenced by role tasks</li>|
+|`tests`|<li>Can contain inventory and `test.yml` playbook</li><li>Used to test role</li>|
+|`vars`|<li>	`main.yml` defines role variable values</li><li>High Priority</li>|
+
 #### Roles in Playbooks
+* Simple to use roles in playbooks
+* Example:
+
+```yaml
+---
+- hosts: remote.example.com
+  roles:
+    - role1
+    - role2
+ ```
+ 
+Order of Execution
+* Default: Role tasks execute before tasks of playbooks in which they appear
+* To override default, use pre_tasks and post_tasks
+	* pre_tasks: Tasks performed before any roles applied
+	* post_tasks: Tasks performed after all roles completed
+
+```yaml
+---
+- hosts: remote.example.com
+  pre_tasks:
+    - shell: echo 'hello'
+  roles:
+    - role1
+    - role2
+  tasks:
+    - shell: echo 'still busy'
+  post_tasks:
+    - shell: echo 'goodbye'
+```
 
 #### Role Creation
 
