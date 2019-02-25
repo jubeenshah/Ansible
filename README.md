@@ -75,9 +75,9 @@ group: wheel
 ```yaml
 [configuration]
 users:
-- joe
+ - joe
  - jane
-	- bob
+ - bob
  ```
 2. Inventory Variables:
 	
@@ -145,9 +145,9 @@ ansible-playbook main.yml -a "user=joe"
 
 vars:
 from: "user"
-	vars_prompt:
-	- name: "user"
-	  prompt: "User to create"
+  vars_prompt:
+  - name: "user"
+    prompt: "User to create"
 ```
 	
 12. Variables included using `vars_files`:
