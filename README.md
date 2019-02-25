@@ -479,6 +479,7 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 [Inclusion](#inclusion)|
 [Loops](#loops)|
 [Ansible Return Values](#ansible-return-values)|
+
 | Value | Description |
 |------|------------|
 | `changed` | <li>Boolean indicating if task had to make changes</li> |
