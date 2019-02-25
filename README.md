@@ -3,6 +3,7 @@
 ## Table of Content
 1. [Loops, Variables, and Return Values](#1-loops-variables-and-return-values)
 2. [Roles](#2-roles)
+3. [Ansible Vault](#3-ansible-vault)
 
 ### 1. Loops, Variables, and Return Values
 * [Variable Overview](#variable-overview)
@@ -624,3 +625,39 @@ Order of Execution
 * Archive contains thousands of Ansible roles
 * Database helps users identify helpful roles for accomplishing task
 * Includes links to documentation and videos for users and developers
+
+
+### 3. Ansible Vault
+
+* [Ansible Vault Overview](#ansible-vault-overview)
+* [Encrypted Files](#encrypted-files)
+* [Playbooks](#playbooks)
+* [Python Cryptography](#python-cryptography)
+
+#### Ansible Vault Overview
+|[Ansible Vault Overview](#ansible-vault-overview)
+|[Encrypted Files](#encrypted-files)
+|[Playbooks](#playbooks)
+|[Python Cryptography](#python-cryptography)
+|
+
+#### Encrypted Files
+|[Ansible Vault Overview](#ansible-vault-overview)
+|[Encrypted Files](#encrypted-files)
+|[Playbooks](#playbooks)
+|[Python Cryptography](#python-cryptography)
+|
+
+#### Playbooks
+|[Ansible Vault Overview](#ansible-vault-overview)
+|[Encrypted Files](#encrypted-files)
+|[Playbooks](#playbooks)
+|[Python Cryptography](#python-cryptography)
+|
+
+#### Python Cryptography
+|[Ansible Vault Overview](#ansible-vault-overview)
+|[Encrypted Files](#encrypted-files)
+|[Playbooks](#playbooks)
+|[Python Cryptography](#python-cryptography)
+|
