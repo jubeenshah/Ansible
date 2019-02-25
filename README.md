@@ -11,8 +11,8 @@
 * [Variable Management](#variable-mangement)
 * [Registered Variables](#registered-variables)
 * [Inclusion](#inclusion)
-* Loops
-* Ansible Return Values
+* [Loops](#loops)
+* [Ansible Return Values](#ansible-return-values)
 
 #### Variable Overview
 * `Variable:` String or number that gets assigned value
@@ -203,9 +203,9 @@ Three levels
 
 | Scope | Definition |
 |-------|-----------|
-| Global | * Set by configuration, environment variables, command line |
-| Play | * Set by playbook, play<br> *  Defined by `vars`, `include`, `include_vars`|
-| Host | * Set at host level <br> * Example: `ansible_user` defines user to connect with on managed host |
+| Global | <ul><li> Set by configuration, environment variables, command line </li></ul> |
+| Play | <ul><li> Set by playbook, play</li> <li>  Defined by `vars`, `include`, `include_vars`</li></ul>|
+| Host | <ul><li> Set at host level </li><li> Example: `ansible_user` defines user to connect with on managed host </li></ul>|
 
 * Scopes let you determine best variable placement
 * To define variable only for playbook, use vars block
@@ -343,10 +343,9 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 * Using multiple external files for tasks and variables:
 	* Lets you build main playbook in modular way
 	* Facilitates reuse of elements across playbooks
+	* To import variables, use `include_vars`:
 
 ```yaml
-To import variables, use include_vars:
-
 ---
 - hosts: all
   tasks:
@@ -379,3 +378,51 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 * Same methods for accessing values as facts or array-based variables
 	* Dot notation: `packages.db_package`, `packages.web_package`
 	* Bracket notation: `packages['db_package']`, `packages['web_package']`
+
+#### Loops
+
+* Loops require use of arrays
+	* You define array and task that iterates over array
+	* Loop iterates over values defined in array
+* To pass loop as argument, use item keyword
+	* Enables Ansible to parse array
+* Ansible supports number of loop types:
+	* Simple loops
+		* List of items Ansible reads and iterates over
+		* To define simple loop, provide list of items to `with_items`
+
+```yaml
+- yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - postfix
+    - dovecot
+```
+
+	* Lists of hashes
+		* Arrays passed as arguments can be list of hashes
+		* Example: Pass multidimensional array (array with key/pair values) to `user` module
+
+```yaml
+- user:
+    name: {{ item.name }}
+    state: present
+    groups: {{ item.groups }}
+  loop:
+    - { name: 'jane', groups: 'wheel' }
+    - { name: 'joe', groups: 'root' }
+```
+
+#### Ansible Return Values
+
+| Value | Description |
+|------|------------|
+| `changed` | <li>Boolean indicating if task had to make changes</li> |
+| `failed` | <li>Boolean indicating if task failed </li> |
+| `msg` | <li>String with generic message relayed to user </li>|
+| `results` | <ul><li>Loop was present for task </li> <li>It contains list of normal module `result` per item</li></ul> |
+| `stderr` | <ul><li>Contains error output of command-line utilities </li> <li> Utilities executed by some modules to run commands (`raw`, `shell`, `command`)</li></ul> |
+| `ansible_facts` | <ul><li>Contains dictionary appended to facts assigned to host </li> <li> Facts are directly accessible </li></ul>|
+| `warnings` | <li>Contains list of strings presented to user </li> |
+| `deprecations` | <li>Key containing list of dictionaries presented to user </li>|
