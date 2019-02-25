@@ -178,10 +178,10 @@ vars_files:
 ```yaml
 tasks:
 - block:
-	- yum: name={{ item }} state=installed
-  with_items:
-    - httpd
-    - memcached
+  - yum: name={{ item }} state=installed
+    with_items:
+      - httpd
+      - memcached
 ```
 
 15. Task variables
