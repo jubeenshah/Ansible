@@ -733,7 +733,7 @@ _Changing a File Password_
 * To change vault password, use `ansible-vault rekey FILENAME`
 * Enter original and new password:
 
-`shell
+```shell
 [student@demo ~]$ ansible-vault rekey secret.yml
 Vault password: redhat
 New Vault password: RedHat
