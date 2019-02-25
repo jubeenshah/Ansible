@@ -421,8 +421,8 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 | `changed` | <li>Boolean indicating if task had to make changes</li> |
 | `failed` | <li>Boolean indicating if task failed </li> |
 | `msg` | <li>String with generic message relayed to user </li>|
-| `results` | <ul><li>Loop was present for task </li> <li>It contains list of normal module `result` per item</li></ul> |
-| `stderr` | <ul><li>Contains error output of command-line utilities </li> <li> Utilities executed by some modules to run commands (`raw`, `shell`, `command`)</li></ul> |
-| `ansible_facts` | <ul><li>Contains dictionary appended to facts assigned to host </li> <li> Facts are directly accessible </li></ul>|
+| `results` | <li>Loop was present for task </li> <li>It contains list of normal module `result` per item</li> |
+| `stderr` | <li>Contains error output of command-line utilities </li> <li> Utilities executed by some modules to run commands (`raw`, `shell`, `command`)</li> |
+| `ansible_facts` | <li>Contains dictionary appended to facts assigned to host </li> <li> Facts are directly accessible </li>|
 | `warnings` | <li>Contains list of strings presented to user </li> |
 | `deprecations` | <li>Key containing list of dictionaries presented to user </li>|
