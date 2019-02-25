@@ -5,16 +5,16 @@
 2. 
 
 ### 1. Loops, Variables, and Return Values
-* [Variables Overview](#variables-overview)
-* [Variable Precedence](#variables-precedence)
-* Variable Scope
+* [Variable Overview](#variable-overview)
+* [Variable Precedence](#variable-precedence)
+* [Variable Scope](#variable-scope)
 * Variables Management
 * Registered Variables
 * Inclusion
 * Loops
 * Ansible Return Values
 
-#### Variables Overview
+#### Variable Overview
 * `Variable:` String or number that gets assigned value
 * Lets you reuse information across:
 	* Playbooks
@@ -63,7 +63,7 @@ name: joe
 group: wheel
 ```
 
-#### Variables Precedence
+#### Variable Precedence
 >	 If Ansible finds variables with same name, uses chain of precedence
 >	 Ansible 2: Variables evaluated in 16 categories of precedence order
 
@@ -135,7 +135,7 @@ tasks:
 	
 10. Variables defined with `-a` or `--args`:
 
-```yaml
+```shell
 ansible-playbook main.yml -a "user=joe"
 ```
 	
@@ -194,6 +194,38 @@ tasks:
 16. `extra` variables
 	* Precedence over all other variables
 
-```yaml
+```shell
 ansible-playbook users.yml -e "user=joe"
+```
+
+#### Variable Scope
+Three levels
+
+| Scope | Definition |
+|-------|-----------|
+| Global | * Set by configuration, environment variables, command line |
+| Play | * Set by playbook, play<br> *  Defined by `vars`, `include`, `include_vars`|
+| Host | * Set at host level <br> * Example: `ansible_user` defines user to connect with on managed host |
+
+* Scopes let you determine best variable placement
+* To define variable only for playbook, use vars block
+	* Variable evaluated when playbook is played:
+```yaml
+vars:
+  user: joe
+  ```
+* To make variable available for host independent of play, define as group variable in inventory file:
+
+```yaml
+[servers]
+demo.example.com
+
+[servers:vars]
+user: joe
+```
+
+* To enable variable to override playbook, declare as extra:
+
+```shell
+[user@demo ~]$ ansible-playbook users.yml -e 'user=joe'
 ```
