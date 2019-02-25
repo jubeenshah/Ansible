@@ -8,7 +8,7 @@
 * [Variable Overview](#variable-overview)
 * [Variable Precedence](#variable-precedence)
 * [Variable Scope](#variable-scope)
-* [Variable Management](#variable-management)
+* [Variable Management](#variable-mangement)
 * Registered Variables
 * Inclusion
 * Loops
