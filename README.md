@@ -9,8 +9,8 @@
 * [Variable Precedence](#variable-precedence)
 * [Variable Scope](#variable-scope)
 * [Variable Management](#variable-mangement)
-* Registered Variables
-* Inclusion
+* [Registered Variables](#registered-variables)
+* [Inclusion](#inclusion)
 * Loops
 * Ansible Return Values
 
@@ -294,3 +294,88 @@ package=httpd
 ```shell
 [user@demo ~]$ ansible-playbook demo2.exampe.com main.yml -e "package=apache"
 ```
+
+#### Registered Variables
+
+* To capture command’s output, use `register` statement
+
+```yaml
+---
+- name: Installs a package and prints the result
+  hosts: all
+  tasks:
+    - name: Install the package
+      yum:
+        name: httpd
+        state: installed
+      register: install_result
+        - debug: var=install_result
+```
+```shell
+[uder@demo ~]$ ansible-playbook playbook.yml
+PLAY [Installs a package and prints the result] ****************************
+
+TASK [setup] ***************************************************************
+ok: [demo.example.com]
+
+TASK [Install the package] *************************************************
+ok: [demo.example.com]
+
+TASK [debug] ***************************************************************
+ok: [demo.example.com] => {
+    "install_result": {
+        "changed": false,
+        "msg": "",
+        "rc": 0,
+        "results": [
+            "httpd-2.4.6-40.el7.x86_64 providing httpd is already installed"
+        ]
+    }
+}
+
+PLAY RECAP *****************************************************************
+demo.example.com : ok=3 changed=0 unreachable=0 failed=0
+```
+
+#### Inclusion
+* Tasks included with `include` executed same as if defined in playbook
+* Variables included with `include_vars` parsed same as if declared in playbook
+* Using multiple external files for tasks and variables:
+	* Lets you build main playbook in modular way
+	* Facilitates reuse of elements across playbooks
+
+```yaml
+To import variables, use include_vars:
+
+---
+- hosts: all
+  tasks:
+  - name: Includes the tasks file and defines the variables
+    include_vars: variables.yml
+
+  - name: Debugs the variables imported
+    debug:
+      msg: "{{ packages['web_package'] }} and {{ packages.db_package }} have been imported"
+```
+```shell
+[user@prompt ~]$ ansible-playbook playbook.yml
+PLAY ***********************************************************************
+
+TASK [setup] ***************************************************************
+ok: [demo.example.com]
+
+TASK [Includes the tasks file and defines the variables] *******************
+ok: [demo.example.com]
+
+TASK [Debugs the variables imported] ***************************************
+ok: [demo.example.com] => {
+    "msg": "httpd and mariadb-server have been imported"
+}
+
+PLAY RECAP *****************************************************************
+demo.example.com : ok=3 changed=0 unreachable=0 failed=0
+```
+* Variables defined as Python dictionary
+* Same methods for accessing values as facts or array-based variables
+	* Dot notation: `packages.db_package`, `packages.web_package`
+	* Bracket notation: `packages['db_package']`, `packages['web_package']`
