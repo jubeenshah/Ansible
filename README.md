@@ -8,7 +8,7 @@
 * [Variable Overview](#variable-overview)
 * [Variable Precedence](#variable-precedence)
 * [Variable Scope](#variable-scope)
-* Variables Management
+* [Variable Management](#variable-management)
 * Registered Variables
 * Inclusion
 * Loops
@@ -228,4 +228,69 @@ user: joe
 
 ```shell
 [user@demo ~]$ ansible-playbook users.yml -e 'user=joe'
+```
+
+#### Variable Mangement
+* Declare playbook variables in various locations:
+	* In inventory file as host or group variables
+	* In vars statement as playbook variables
+	* In register statement
+	* Passed as arguments using `-a`
+	* Passed as extra arguments using `-e`
+
+Example 1: Value Varying by Datacenter
+
+```yaml
+[datacenter1]
+demo1.example.com
+demo2.example.com
+
+[datacenter2]
+demo3.example.com
+demo4.example.com
+
+[datacenter1:vars]
+package=httpd
+
+[datacenter2:vars]
+package=apache
+```
+
+Example 2: Value Varying by Host
+
+```yaml
+[datacenter1]
+demo1.example.com package=httpd
+demo2.example.com package=apache
+
+[datacenter2]
+demo3.example.com package=mariadb-server
+demo4.example.com package=mysql-server
+
+[datacenters:children]
+datacenter1
+datacenter2
+```
+
+Example 3: Default Value that Host Overrides
+
+```yaml
+[datacenter1]
+demo1.example.com
+demo2.example.com
+
+[datacenter2]
+demo3.example.com
+demo4.example.com
+
+[datacenters:children]
+datacenter1
+datacenter2
+
+[datacenters:vars]
+package=httpd
+```
+
+```shell
+[user@demo ~]$ ansible-playbook demo2.exampe.com main.yml -e "package=apache"
 ```
