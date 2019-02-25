@@ -2,7 +2,7 @@
 
 ## Table of Content
 1. [Loops, Variables, and Return Values](#1-loops-variables-and-return-values)
-2. 
+2. [Roles](#2-roles)
 
 ### 1. Loops, Variables, and Return Values
 * [Variable Overview](#variable-overview)
@@ -426,3 +426,19 @@ demo.example.com : ok=3 changed=0 unreachable=0 failed=0
 | `ansible_facts` | <li>Contains dictionary appended to facts assigned to host </li> <li> Facts are directly accessible </li>|
 | `warnings` | <li>Contains list of strings presented to user </li> |
 | `deprecations` | <li>Key containing list of dictionaries presented to user </li>|
+
+
+### 2. Roles
+* [Roles Overview](#roles-overview)
+* [Roles in Playbooks](#roles-in-playbook)
+* [Role Creation](#roles-creation)
+* [Ansible Galaxy](#ansible-galaxy)
+
+
+#### Roles Overview
+
+#### Roles in Playbooks
+
+#### Role Creation
+
+#### Ansible Galaxy
